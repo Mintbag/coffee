@@ -5,6 +5,7 @@ import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
+from untitled import Ui_MainWindow
 con = sqlite3.connect("coffee0.db")
 curs = con.cursor()
 result = curs.execute('CREATE TABLE IF NOT EXISTS coffees(ID INTEGER, '
@@ -18,10 +19,10 @@ con.commit()
 con.close()
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('untitled.ui', self)
+        self.setupUi(self)
         db = QSqlDatabase.addDatabase('QSQLITE')
         db.setDatabaseName('coffee0.db')
         db.open()
@@ -53,8 +54,8 @@ class MyWidget(QMainWindow):
 
 class SecondWindow(QMainWindow):
     def __init__(self, values=None):
-        super(SecondWindow, self).__init__()
-        uic.loadUi('secondwin.ui', self)
+        super().__init__()
+        uic.loadUi('addEditCoffeeForm.ui', self)
         self.show()
         self.pushButton.clicked.connect(self.run)
         self.pushButton_3.clicked.connect(self.run_3)
